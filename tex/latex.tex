@@ -1,0 +1,73 @@
+\documentclass[a4paper, 10pt]{report}
+%\usepackage{showframe}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc} %this package is used by \tableofcontents   
+\usepackage{comment} %\begin{comment}...\end{comment} 
+\usepackage{mathrsfs} %\begin{comment}...\end{comment} 
+
+\usepackage{multicol} % column
+\usepackage{tikz} % draw
+\usepackage{float}
+
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}	
+
+\usepackage[width=14cm, left=2.5cm, right=2.5cm]{geometry}
+
+\usepackage{pgfplots}
+
+\usepackage{fancyhdr}
+
+\usepackage{listings}
+
+
+
+
+% REFERENCING
+\def \mqref#1{eq.~(\ref{#1})}
+\def \mdref#1{def.~(\ref{#1})}
+\def \mfref#1{figure~\ref{#1}}
+\def \mcref#1{chapter~\ref{#1}}
+\def \msref#1{section~\ref{#1}}
+\def \mtref#1{table~\ref{#1}}
+
+
+
+\setlength{\parindent}{1em} % indentation
+\setlength{\parskip}{6pt}   % space between paragraphs
+
+\everymath{\displaystyle}
+
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE,LO]{\rightmark}
+
+ 
+ 
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour}
+}
+
+\lstset{style=mystyle}
+
+
+
+		
+\begin{document}
+
+\tableofcontents
+
+%\input{1.Introduzione/Introduzione.tex}
+\input{task_1.tex}
+\input{task_2.tex}
+%\input{4.Conclusioni/Conclusioni.tex}
+%\input{5.Bibliografia/Bibliografia.tex}
+
+\end{document}

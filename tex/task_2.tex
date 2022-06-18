@@ -1,0 +1,270 @@
+\addcontentsline{toc}{chapter}{Anomaly detection}
+\chapter*{Anomaly detection}
+
+\addcontentsline{toc}{section}{Data Understanding}
+\section*{Data Understanding}\label{Data Understanding}
+
+~~The training set is composed by control patient, i.e. volunteers without Parkinson’s Desease. 
+
+The train dataset contains 7 different features: identification of patient, accelerometer readings in the three axes (x, y, z), heart rate, date and timestamp. Data were collected every 10 seconds for a total of 943522 records and 13 volunteers. Missing value on heart rate attribute are labeled with -1.
+
+Here are the first few rows of the train dataset:
+
+\begin{center}
+\begin{tabular}{| c | c | c | c | c | c | c | c |} 
+\hline
+No. & patient & x & y & z & heartRate & timestamp & tsDate \\ [0.5ex] 
+\hline
+\hline
+0 &	1502 &	23 &	569 &	878 &	-1 &	1568073600000 &	2019-09-10 00:00:00.003 \\
+\hline
+1 &	1502 &	23 &	571 &	878 &	-1 &	1568073601000 &	2019-09-10 00:00:01.014 \\
+\hline
+2 &	1502 &	23 &	570 &	878 &	-1 &	1568073602000 &	2019-09-10 00:00:02.025 \\
+\hline
+3 &	1502 &	23 &	570 &	878 &	-1 &	1568073603000 &	2019-09-10 00:00:03.035 \\
+\hline
+4 &	1502 &	23 &	570 &	878 &	-1 &	1568073604000 &	2019-09-10 00:00:04.046 \\
+\hline
+5 &	1502 &	23 &	570 &	879 &	-1 &	1568073605000 &	2019-09-10 00:00:05.057 \\
+\hline
+6 &	1502 &	23 &	569 &	879 &	-1 &	1568073606000 &	2019-09-10 00:00:06.066 \\
+\hline
+7 &	1502 &	22 &	570 &	879 &	-1 &	1568073607000 &	2019-09-10 00:00:07.078 \\
+\hline
+8 &	1502 &	23 &	570 &	879 &	-1 &	1568073608000 &	2019-09-10 00:00:08.088 \\
+\hline
+9 &	1502 &	24 &	570 &	878 &	-1 &	1568073609000 &	2019-09-10 00:00:09.099 \\ [1ex] 
+\hline
+\end{tabular}
+\end{center}
+
+Here is the time evolution of the three components of acceleration and heart rate over time for one volunteer:
+
+\begin{figure}[H]
+\centering
+  \includegraphics[scale=0.3]{img/task_2/data(5min).png}
+  \caption{}
+  \label{fig: }
+\end{figure}
+
+\textcolor{red}{TODO} caption figure
+
+Let's take a look at the statistics of the dataset:
+
+\begin{center}
+\begin{tabular}{| c | c | c | c | c | c | c | c |} 
+\hline
+column & mean & std & min & 25\% & 50\% & 75\% & max \\ [0.5ex] 
+\hline
+\hline
+x  &	-82.99378 & 577.0332 & -1649.000  & -532.0000 & -91.00000 & 311.0000 & 1796.000 \\
+\hline
+y  &	265.3513 & 539.7477 & -1082.000 & -59.00000 & 313.0000 & 7.390000 & 1644.000 \\
+\hline
+z  &	-203.9305 & 534.9554 & -1256.0003  & -665.0000 & -223.0000  & 125.0000 & 1127.000 \\
+\hline
+heartRate & 70.20357 & 20.97376 & -1.000000 & 61.000001 & 70.00000 & 82.00000 & 182.0000 \\ [1ex]
+\hline
+\end{tabular}
+\end{center}
+
+\begin{figure}[H]
+\centering
+  \includegraphics[scale=0.4]{img/task_2/histograms.png}
+  \caption{}
+  \label{fig: }
+\end{figure}
+
+\textcolor{red}{TODO} caption figure
+
+
+
+
+
+\addcontentsline{toc}{section}{Data Preparation}
+\section*{Data Preparation}\label{Data Preparation}
+
+~~First, we replace missing values on heart rate attribute (labeled with -1) with median.
+
+\begin{lstlisting}[language=Python]
+import pandas as pd
+
+trn_df = pd.read_csv('ad_train.csv', sep = ',')
+tst_df = pd.read_csv('ad_test.csv', sep = ',')
+
+bad_hr = trn_df['heartRate'] == -1
+trn_df['heartRate'][bad_hr] = np.median(trn_df['heartRate'])
+\end{lstlisting}
+
+Select only relevant attributes meaning the three components of the acceleration and heart rate and sub-sample the data from 1 second interval to 10 second interval.
+
+\addcontentsline{toc}{subsection}{Splitting}
+\subsection*{Splitting}\label{Splitting}
+
+~~As before we'll use a 80\% of the train data (ad\_train.csv) for training and remaining 20\% for validation. The test data (ad\_test.csv) was set aside for testing the model.
+
+\begin{lstlisting}[language=Python]
+n = len(train_df)
+
+train_data = train_df[           : int(n*0.8)].to_numpy()
+valid_data = train_df[int(n*0.8) :           ].to_numpy()
+test_data  = tst_df[['x', 'y', 'z', 'heartRate']].to_numpy()
+\end{lstlisting}
+
+
+\addcontentsline{toc}{subsection}{Scaling}
+\subsection*{Scaling}\label{Scaling}
+
+~~We'll transform each feature individually such that it is in the given range on the training set, in our case between 0 and 1. 
+
+\begin{lstlisting}[language=Python]
+from sklearn.preprocessing import MinMaxScaler
+
+scaler = MinMaxScaler()
+
+train = scaler.fit_transform(train_data.reshape(-1, 1))
+valid = scaler.transform(valid_data.reshape(-1, 1))
+test = scaler.transform(test_data.reshape(-1, 1))
+\end{lstlisting}
+
+
+
+
+\addcontentsline{toc}{section}{Data Modeling}
+\section*{Data Modeling}\label{Data Modeling}
+
+In anomaly detection, the goal is to ﬁnd objects that do not conform to normal patterns or behavior. Often, anomalous objects are known as \textbf{outliers}, since, on a scatter plot of the data, they lie far away from other data points. Anomaly detection is also known as \textbf{deviation detection}, because anomalous objects have attribute values that deviate signiﬁcantly from the expected or typical attribute values, or as textbf{exception mining}, because anomalies are exceptional in some sense. There are a variety of anomaly detection approaches from several areas, including statistics, machine learning, and data mining. All try to capture the idea that an anomalous data object is unusual or in some way inconsistent with other objects.
+
+Although unusual objects or events are, by deﬁnition, relatively rare, their detection and analysis provides critical insights that are useful in a number of
+applications for instance: Medicine and Public Health. For a particular patient, unusual symptoms or test results may indicate potential health problems. However, whether a particular test result is anomalous may depend on many other characteristics of the patient, such as age, sex, and genetic makeup. Furthermore, the categorization of a result as anomalous or not incurs a cost—unneeded additional tests if a patient is healthy and potential harm to the patient if a condition is left undiagnosed and untreated. The detection of emerging disease outbreaks which result in unusual and alarming test results in a series of patients, is also important for monitoring the spread of diseases and taking preventive actions.
+
+The nature of the input data plays a key role in deciding the choice of a suitable anomaly detection technique.
+
+If the data contains a single attribute, the question of whether an object is anomalous depends on whether the object’s value for that attribute is anomalous. However, if the data objects are represented using many attributes, a data object may have anomalous values for some attributes but ordinary values for other attributes. Furthermore, an object may be anomalous even if none of its attribute values are individually anomalous. Identifying an anomaly in a multivariate
+setting is thus challenging, particularly when the dimensionality of the data is high.
+
+Since anomalies are infrequent, most input data sets have a predominance of normal instances. The input data set is thus often used as an imperfect representation of the normal class in most anomaly detection techniques. However, the performance of such methods needs to be robust to the presence of outliers in the input data.
+
+Anomalies, unlike normal objects, are often unrelated to each other and hence distributed sparsely in the space of attributes. Indeed, the successful operation of most anomaly detection methods depends on anomalies not being tightly clustered.
+
+\addcontentsline{toc}{subsection}{Reconstruction-based Approaches}
+\subsection*{Reconstruction-based Approaches}\label{Reconstruction-based Approaches}
+
+Reconstruction-based techniques rely on the assumption that the normal class resides in a space of lower dimensionality than the original space of attributes.
+In other words, there are patterns in the distribution of the normal class that can be captured using lower-dimensional representations, e.g., by using dimensionality reduction techniques.
+
+To illustrate this, consider a data set of normal instances, where every instance is represented using p continuous attributes, $x_1$, ... , $x_p$ . If there is
+a hidden structure in the normal class, we can expect to approximate this data using fewer than $p$ derived features.
+
+One common approach for deriving useful features from a data set is to use autoencoders. An autoencoder (also referred to as an autoassociator or a mirroring net-
+work) is a multi-layer neural network, where the number of input and output neurons is equal to the number of original attributes. The general architecture of an autoencoder involves two basic steps: encoding and decoding. During encoding, a data instance $\textbf{x}$ is transformed to a low-dimensional representation $\textbf{y}$, using a number of nonlinear transformations in the encoding layers. The number of neurons reduces at every encoding layer, so as to learn low-dimensional representations from the original data. The learned representation $\textbf{y}$ is then mapped back to the original space of attributes using the decoding layers, resulting in a reconstruction of $\textbf{x}$ ($\hat {\textbf{x}}$). The distance between $\textbf{x}$ and $\hat {\textbf{x}}$ (the reconstruction error) is then used as a measure of an anomaly score.
+
+The autoencoder scheme provides a powerful approach for learning complex and nonlinear representations of the normal class.
+
+\textcolor{red}{TODO} mejorar el paso del parrafo anterior al modelo
+
+Here is our model.
+
+\begin{lstlisting}[language=Python]
+encoder_inputs = 
+	tf.keras.layers.Input(shape=(sequence_lenght, number_of_features))
+
+encoder_l1 = tf.keras.layers.LSTM(16, return_state=True, activation='tanh')
+encoder_outputs1 = encoder_l1(encoder_inputs)
+encoder_states1 = encoder_outputs1[1:]
+
+decoder_inputs = 
+	tf.keras.layers.RepeatVector(sequence_lenght)(encoder_outputs1[0])
+
+decoder_l1 = 
+	tf.keras.layers.LSTM(16, return_sequences=True, activation='tanh')
+	(decoder_inputs, initial_state = encoder_states1)
+
+decoder_outputs1 = 
+	tf.keras.layers.TimeDistributed(tf.keras.layers.Dense(number_of_features))
+	(decoder_l1)
+
+autoencoder = tf.keras.models.Model(encoder_inputs,decoder_outputs1)
+
+autoencoder.summary()
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python]
+reduce_lr = tf.keras.callbacks.LearningRateScheduler(lambda x: 1e-3 * 0.90 ** x)
+
+autoencoder.compile(loss = 'mae', optimizer='adam')
+history = autoencoder.fit(train, train, epochs=60, 
+		validation_data=(valid, valid), verbose=1, 
+		batch_size=32, shuffle=False, callbacks=[reduce_lr])
+\end{lstlisting}
+
+\addcontentsline{toc}{subsection}{Detect Anomaly}
+\subsection*{Detect Anomaly}\label{Detect Anomaly}
+
+\begin{figure}[H]
+\centering
+  \includegraphics[scale=0.35]{img/task_2/reconstructions_train.png}
+  \caption{}
+  \label{fig: }
+\end{figure}
+
+\textcolor{red}{TODO} caption figure
+
+We'll detect anomalies by calculating whether the reconstruction loss is greater than a fixed threshold.
+
+We choose a threshold value then classify future examples as anomalous if the reconstruction error is higher than the threshold.
+
+We will use three different thresholds values:
+* calculate the mean and standard deviation of the reconstruction error of the training set, then classify future examples as anomalous if the reconstruction error is higher than one standard deviation from the training set.
+* calculte the third quartile, then classify future examples as anomalous if the reconstruction error is higher than  this value
+* classify future examples as anomalous if the reconstruction error is higher than  0.003
+
+Plot the reconstruction error on the train data.
+
+\begin{figure}[H]
+\centering
+  \includegraphics[scale=0.4]{img/task_2/train_loss.png}
+  \caption{}
+  \label{fig: }
+\end{figure}
+
+\textcolor{red}{TODO} caption figure
+
+Plot the reconstruction error on the test data.
+
+\begin{figure}[H]
+\centering
+  \includegraphics[scale=0.4]{img/task_2/test_loss.png}
+  \caption{}
+  \label{fig: }
+\end{figure}
+
+\textcolor{red}{TODO} caption figure
+
+\begin{figure}[H]
+\centering
+  \includegraphics[scale=0.4]{img/task_2/train_test_loss.png}
+  \caption{}
+  \label{fig: }
+\end{figure}
+
+\textcolor{red}{TODO} caption figure
+
+\begin{figure}[H]
+\centering
+  \includegraphics[scale=0.4]{img/task_2/anomalies.png}
+  \caption{}
+  \label{fig: }
+\end{figure}
+
+\textcolor{red}{TODO} caption figure
+
+\begin{figure}[H]
+\centering
+  \includegraphics[scale=0.35]{img/task_2/reconstructions_test.png}
+  \caption{}
+  \label{fig: }
+\end{figure}
+
+\textcolor{red}{TODO} caption figure

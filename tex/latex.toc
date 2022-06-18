@@ -1,0 +1,16 @@
+\babel@toc {english}{}
+\contentsline {chapter}{Next value prediction}{1}%
+\contentsline {section}{Data Understanding}{2}%
+\contentsline {section}{Data Preparation}{4}%
+\contentsline {subsection}{Splitting}{4}%
+\contentsline {subsection}{Scaling}{4}%
+\contentsline {subsection}{Windowing}{5}%
+\contentsline {section}{Data Modeling}{5}%
+\contentsline {chapter}{Anomaly detection}{8}%
+\contentsline {section}{Data Understanding}{9}%
+\contentsline {section}{Data Preparation}{11}%
+\contentsline {subsection}{Splitting}{11}%
+\contentsline {subsection}{Scaling}{12}%
+\contentsline {section}{Data Modeling}{12}%
+\contentsline {subsection}{Reconstruction-based Approaches}{13}%
+\contentsline {subsection}{Detect Anomaly}{14}%
