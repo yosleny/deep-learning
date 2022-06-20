@@ -4,9 +4,9 @@
 \addcontentsline{toc}{section}{Data Understanding}
 \section*{Data Understanding}\label{Data Understanding}
 
-~~ There two sets of data one for training (train.csv) and one from testing (test.csv).
+~~ There are two sets of data one for training (train.csv) and one from testing (test.csv).
 
-The train dataset contains 3 different features: x, y and z components of acceleration. These were collected every 10 seconds for a total of 144911 records. 
+The datasets contain 3 different features: x, y and z components of acceleration collected every 10 seconds for a total of 144911 records. 
 
 Here are the first few rows of the train dataset:
 
@@ -39,18 +39,14 @@ No. & x & y & z \\ [0.5ex]
 \end{tabular}
 \end{center}
 
-\textcolor{red}{TODO} caption table
-
 Here is the time evolution of the three features over time:
 
 \begin{figure}[H]
 \centering
   \includegraphics[scale=0.3]{img/task_1/data(hour).png}
-  \caption{}
-  \label{fig: }
+  \caption{Time evolution of the three components of acceleration.}
+  \label{fig: time evolution acc task 1}
 \end{figure}
-
-\textcolor{red}{TODO} caption figure
 
 Let's take a look at the statistics of the dataset:
 
@@ -73,13 +69,9 @@ z & -307.588768 & 538.335654 & -1001.0 & -794.0 & -416.0 & 83.0 & 1032.0 \\ [1ex
 \begin{figure}[H]
 \centering
   \includegraphics[scale=0.4]{img/task_1/histograms.png}
-  \caption{}
-  \label{fig: }
+  \caption{Distribution of the data.}
+  \label{fig: histograms task 1 }
 \end{figure}
-
-\textcolor{red}{TODO} caption figure
-
-
 
 
 
@@ -89,7 +81,7 @@ z & -307.588768 & 538.335654 & -1001.0 & -794.0 & -416.0 & 83.0 & 1032.0 \\ [1ex
 \addcontentsline{toc}{subsection}{Splitting}
 \subsection*{Splitting}\label{Splitting}
 
-~~We'll use a 80\% of the train data (train.csv) for training and remaining 20\% for validation. The test data (test.csv) was set aside for testing the model.
+~~We'll use a 80\% of the train data (train.csv) for training and the remaining 20\% for validation. The test data (test.csv) was set aside for testing the model.
 
 \begin{lstlisting}[language=Python]
 import pandas as pd
@@ -127,9 +119,9 @@ valid = scaler.transform(valid_df)
   \item[2.] the window shift.
 \end{itemize}
 
-For example, to make a single prediction 1 minute into the future, given 5 minutes of history, we might define a window like this:
+In this work we will make a single prediction 1 minute into the future, given 5 minutes of history. 
 
-Suppose that x has these values: x = [0, 1, 2, 3, 4]. Assume that the size of the window is 2 and the shift is 1. We create the following sequences: data = [[0, 1], [1, 2], [2, 3]], , label = [[2], [3], [4]], the goal is to predict for the sequence [0, 1] the value 2, for [1, 2] the value [3] and fot the sequence [2, 3] the value [4].
+For the purpose of demonstration suppose that x has these values: x = [0, 1, 2, 3, 4]. Assume that the size of the window is 2 and the shift is 1. We create the following sequences: data = [[0, 1], [1, 2], [2, 3]], , label = [[2], [3], [4]], the goal is to predict for the sequence [0, 1] the value 2, for [1, 2] the value [3] and fot the sequence [2, 3] the value [4].
 
 
 \begin{lstlisting}[language=Python]
@@ -173,11 +165,9 @@ An important constructor argument for all Keras RNN layers, such as tf.keras.lay
 \begin{figure}[H]
 \centering
   \includegraphics[scale=0.35]{img/task_1/fig1.png}
-  \caption{}
   \label{fig: }
 \end{figure}
 
-\textcolor{red}{TODO} caption figure
 
 \begin{itemize}
   \item[1.] If True, the layer returns an output for each input. This is useful for:
@@ -190,19 +180,17 @@ An important constructor argument for all Keras RNN layers, such as tf.keras.lay
 \begin{figure}[H]
 \centering
   \includegraphics[scale=0.35]{img/task_1/fig2.png}
-  \caption{}
   \label{fig: }
 \end{figure}
 
-\textcolor{red}{TODO} caption figure
 
 Here is our model.
 
 \begin{lstlisting}[language=Python]
 lstm = tf.keras.models.Sequential([
 	tf.keras.layers.LSTM(16, 
-			     input_shape=(seq_len, num_feat), 
-			     return_sequences=True),
+		     input_shape=(sequence_length, numumber_of_features), 
+		     return_sequences=True),
 	tf.keras.layers.LSTM(8),
 	tf.keras.layers.Dense(1, activation='tanh')
 ])
@@ -216,6 +204,8 @@ history = lstm.fit(x_train, y_train, epochs=100,
 			verbose = 1, batch_size=32, shuffle=False)
 \end{lstlisting}
 
+We obtain the fallowing results.
+
 \begin{center}
 \begin{tabular}{| c | c | c | c |} 
 \hline
@@ -226,6 +216,10 @@ MAE & 54.55 & 59.22 & 61.74 \\
 \hline
 \end{tabular}
 \end{center}
+
+As mentioned before we use a window of 5 minutues and a shift of 1 minute, but this was an arbitrary choice. In order to evaluate the impact of window size and window shift we rerun our model varying this two parameters.
+
+Mean Square Error (MAE) with a fixed window shift of 1 minute and variable window size. 
 
 \begin{center}
 \begin{tabular}{| c | c |} 
@@ -265,6 +259,8 @@ Window (min) & MAE  \\ [0.5ex]
 \hline
 \end{tabular}
 \end{center}
+
+Mean Square Error (MAE) with a fixed window size of 5 minutes and variable window shift. 
 
 \begin{center}
 \begin{tabular}{| c | c |} 

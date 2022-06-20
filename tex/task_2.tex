@@ -6,7 +6,7 @@
 
 ~~The training set is composed by control patient, i.e. volunteers without Parkinson’s Desease. 
 
-The train dataset contains 7 different features: identification of patient, accelerometer readings in the three axes (x, y, z), heart rate, date and timestamp. Data were collected every 10 seconds for a total of 943522 records and 13 volunteers. Missing value on heart rate attribute are labeled with -1.
+The train dataset contains 7 different features: identification of patient, accelerometer readings in the three axes (x, y, z), heart rate, date and timestamp. Data were collected every 1 seconds for a total of 943522 records and 13 volunteers. Missing value on heart rate attribute are labeled with -1.
 
 Here are the first few rows of the train dataset:
 
@@ -44,11 +44,9 @@ Here is the time evolution of the three components of acceleration and heart rat
 \begin{figure}[H]
 \centering
   \includegraphics[scale=0.3]{img/task_2/data(5min).png}
-  \caption{}
-  \label{fig: }
+  \caption{Time evolution of the three components of acceleration and heart rate over time for one volunteer}
+  \label{fig: fig: time evolution acc and hr task 2}
 \end{figure}
-
-\textcolor{red}{TODO} caption figure
 
 Let's take a look at the statistics of the dataset:
 
@@ -72,11 +70,9 @@ heartRate & 70.20357 & 20.97376 & -1.000000 & 61.000001 & 70.00000 & 82.00000 & 
 \begin{figure}[H]
 \centering
   \includegraphics[scale=0.4]{img/task_2/histograms.png}
-  \caption{}
-  \label{fig: }
+  \caption{Distribution of the data.}
+  \label{fig: histograms task 2 }
 \end{figure}
-
-\textcolor{red}{TODO} caption figure
 
 
 
@@ -102,7 +98,7 @@ Select only relevant attributes meaning the three components of the acceleration
 \addcontentsline{toc}{subsection}{Splitting}
 \subsection*{Splitting}\label{Splitting}
 
-~~As before we'll use a 80\% of the train data (ad\_train.csv) for training and remaining 20\% for validation. The test data (ad\_test.csv) was set aside for testing the model.
+~~As before we'll use a 80\% of the train data (ad\_train.csv) for training and the remaining 20\% for validation. The test data (ad\_test.csv) was set aside for testing the model.
 
 \begin{lstlisting}[language=Python]
 n = len(train_df)
@@ -111,6 +107,9 @@ train_data = train_df[           : int(n*0.8)].to_numpy()
 valid_data = train_df[int(n*0.8) :           ].to_numpy()
 test_data  = tst_df[['x', 'y', 'z', 'heartRate']].to_numpy()
 \end{lstlisting}
+
+
+
 
 
 \addcontentsline{toc}{subsection}{Scaling}
@@ -131,13 +130,14 @@ test = scaler.transform(test_data.reshape(-1, 1))
 
 
 
+
 \addcontentsline{toc}{section}{Data Modeling}
 \section*{Data Modeling}\label{Data Modeling}
 
-In anomaly detection, the goal is to ﬁnd objects that do not conform to normal patterns or behavior. Often, anomalous objects are known as \textbf{outliers}, since, on a scatter plot of the data, they lie far away from other data points. Anomaly detection is also known as \textbf{deviation detection}, because anomalous objects have attribute values that deviate signiﬁcantly from the expected or typical attribute values, or as textbf{exception mining}, because anomalies are exceptional in some sense. There are a variety of anomaly detection approaches from several areas, including statistics, machine learning, and data mining. All try to capture the idea that an anomalous data object is unusual or in some way inconsistent with other objects.
+In anomaly detection, the goal is to ﬁnd objects that do not conform to normal patterns or behavior. Often, anomalous objects are known as \textbf{outliers}, since, on a scatter plot of the data, they lie far away from other data points. Anomaly detection is also known as \textbf{deviation detection}, because anomalous objects have attribute values that deviate signiﬁcantly from the expected or typical attribute values, or as \textbf{exception mining}, because anomalies are exceptional in some sense. There are a variety of anomaly detection approaches from several areas, including statistics, machine learning, and data mining. All try to capture the idea that an anomalous data object is unusual or in some way inconsistent with other objects.
 
 Although unusual objects or events are, by deﬁnition, relatively rare, their detection and analysis provides critical insights that are useful in a number of
-applications for instance: Medicine and Public Health. For a particular patient, unusual symptoms or test results may indicate potential health problems. However, whether a particular test result is anomalous may depend on many other characteristics of the patient, such as age, sex, and genetic makeup. Furthermore, the categorization of a result as anomalous or not incurs a cost—unneeded additional tests if a patient is healthy and potential harm to the patient if a condition is left undiagnosed and untreated. The detection of emerging disease outbreaks which result in unusual and alarming test results in a series of patients, is also important for monitoring the spread of diseases and taking preventive actions.
+applications for instance in Medicine and Public Health. For a particular patient, unusual symptoms or test results may indicate potential health problems. However, whether a particular test result is anomalous may depend on many other characteristics of the patient, such as age, sex, and genetic makeup. Furthermore, the categorization of a result as anomalous or not incurs a cost—unneeded additional tests if a patient is healthy and potential harm to the patient if a condition is left undiagnosed and untreated. The detection of emerging disease outbreaks which result in unusual and alarming test results in a series of patients, is also important for monitoring the spread of diseases and taking preventive actions.
 
 The nature of the input data plays a key role in deciding the choice of a suitable anomaly detection technique.
 
@@ -160,22 +160,20 @@ a hidden structure in the normal class, we can expect to approximate this data u
 One common approach for deriving useful features from a data set is to use autoencoders. An autoencoder (also referred to as an autoassociator or a mirroring net-
 work) is a multi-layer neural network, where the number of input and output neurons is equal to the number of original attributes. The general architecture of an autoencoder involves two basic steps: encoding and decoding. During encoding, a data instance $\textbf{x}$ is transformed to a low-dimensional representation $\textbf{y}$, using a number of nonlinear transformations in the encoding layers. The number of neurons reduces at every encoding layer, so as to learn low-dimensional representations from the original data. The learned representation $\textbf{y}$ is then mapped back to the original space of attributes using the decoding layers, resulting in a reconstruction of $\textbf{x}$ ($\hat {\textbf{x}}$). The distance between $\textbf{x}$ and $\hat {\textbf{x}}$ (the reconstruction error) is then used as a measure of an anomaly score.
 
-The autoencoder scheme provides a powerful approach for learning complex and nonlinear representations of the normal class.
-
-\textcolor{red}{TODO} mejorar el paso del parrafo anterior al modelo
+The autoencoder scheme provides a powerful approach for learning complex and nonlinear representations of the normal class. We will use this approach to try to detect anomalies in our data.
 
 Here is our model.
 
 \begin{lstlisting}[language=Python]
 encoder_inputs = 
-	tf.keras.layers.Input(shape=(sequence_lenght, number_of_features))
+	tf.keras.layers.Input(shape=(sequence_length, number_of_features))
 
 encoder_l1 = tf.keras.layers.LSTM(16, return_state=True, activation='tanh')
 encoder_outputs1 = encoder_l1(encoder_inputs)
 encoder_states1 = encoder_outputs1[1:]
 
 decoder_inputs = 
-	tf.keras.layers.RepeatVector(sequence_lenght)(encoder_outputs1[0])
+	tf.keras.layers.RepeatVector(sequence_length)(encoder_outputs1[0])
 
 decoder_l1 = 
 	tf.keras.layers.LSTM(16, return_sequences=True, activation='tanh')
@@ -199,72 +197,88 @@ history = autoencoder.fit(train, train, epochs=60,
 		batch_size=32, shuffle=False, callbacks=[reduce_lr])
 \end{lstlisting}
 
+
+
+
+
 \addcontentsline{toc}{subsection}{Detect Anomaly}
 \subsection*{Detect Anomaly}\label{Detect Anomaly}
+
+We will plot the train data, the reconstruction after it's encoded and decoded by the autoencoder, and the reconstruction error of the three components of acceleration and heart rate over time for one volunteer.
 
 \begin{figure}[H]
 \centering
   \includegraphics[scale=0.35]{img/task_2/reconstructions_train.png}
-  \caption{}
-  \label{fig: }
+  \caption{Train data, the reconstruction and the reconstruction error of the three components of acceleration and heart rate over time for one volunteer.}
+  \label{fig: rec train}
 \end{figure}
-
-\textcolor{red}{TODO} caption figure
 
 We'll detect anomalies by calculating whether the reconstruction loss is greater than a fixed threshold.
 
 We choose a threshold value then classify future examples as anomalous if the reconstruction error is higher than the threshold.
 
 We will use three different thresholds values:
-* calculate the mean and standard deviation of the reconstruction error of the training set, then classify future examples as anomalous if the reconstruction error is higher than one standard deviation from the training set.
-* calculte the third quartile, then classify future examples as anomalous if the reconstruction error is higher than  this value
-* classify future examples as anomalous if the reconstruction error is higher than  0.003
 
-Plot the reconstruction error on the train data.
+\begin{itemize}
+  \item[1.] calculate the mean and standard deviation of the reconstruction error of the training set, then classify future examples as anomalous if the reconstruction error is higher than one standard deviation from the training set,
+  \item[2.] calculte the third quartile, then classify future examples as anomalous if the reconstruction error is higher than  this value, 
+  \item[3.] classify future examples as anomalous if the reconstruction error is higher than  0.003.
+\end{itemize}
+
+Let's take a look to the distribution of the reconstruction error on the train data.
 
 \begin{figure}[H]
 \centering
   \includegraphics[scale=0.4]{img/task_2/train_loss.png}
-  \caption{}
-  \label{fig: }
+  \caption{Distribution of reconstruction error on the train data and the three thresholds.}
+  \label{fig: train loss}
 \end{figure}
 
-\textcolor{red}{TODO} caption figure
-
-Plot the reconstruction error on the test data.
-
-\begin{figure}[H]
-\centering
-  \includegraphics[scale=0.4]{img/task_2/test_loss.png}
-  \caption{}
-  \label{fig: }
-\end{figure}
-
-\textcolor{red}{TODO} caption figure
+Then we applied our model to the test data and plot the reconstruction error on the test data alongside the reconstruction error on the train data and the thresholds.
 
 \begin{figure}[H]
 \centering
   \includegraphics[scale=0.4]{img/task_2/train_test_loss.png}
-  \caption{}
-  \label{fig: }
+  \caption{Distribution of reconstruction error on the test data and the three thresholds.}
+  \label{fig: test loss}
 \end{figure}
 
-\textcolor{red}{TODO} caption figure
-
-\begin{figure}[H]
-\centering
-  \includegraphics[scale=0.4]{img/task_2/anomalies.png}
-  \caption{}
-  \label{fig: }
-\end{figure}
-
-\textcolor{red}{TODO} caption figure
+We will plot the test data, the reconstruction after it’s encoded and decoded by the autoencoder, and the reconstruction error of the three components of acceleration and heart rate over time for one patient.
 
 \begin{figure}[H]
 \centering
   \includegraphics[scale=0.35]{img/task_2/reconstructions_test.png}
-  \caption{}
-  \label{fig: }
+  \caption{Test data, the reconstruction and the reconstruction error of the three components of acceleration and heart rate over time for one patient.}
+  \label{fig: rec test}
 \end{figure}
 
-\textcolor{red}{TODO} caption figure
+Finally for each row in the test set we will attach a label: true means that the row present normal values (reconstruction loss below the threshold) and false means that the row present anomaly values (reconstruction loss above the threshold). Here are a few rows.
+
+\begin{center}
+\begin{tabular}{| c | c | c | c | c | c | c |} 
+\hline
+No. & patient & tsDate & threshold=0.0014 & threshold=0.0019 & threshold=0.0030 \\ [0.5ex] 
+\hline
+\hline
+0 &	1004 & 2019-08-31 04:00:00.004 & True & True & True \\
+\hline
+1 &	1004 & 2019-08-31 04:00:10.022 & True & True & True \\
+\hline
+2 &	1004 & 2019-08-31 04:00:20.041 & True & True & True \\
+\hline
+3 &	1004 & 2019-08-31 04:00:30.059 & True & True & True \\
+\hline
+4 &	1004 & 2019-08-31 04:00:40.060 & True & True & True \\
+\hline
+5 &	1004 & 2019-08-31 04:00:50.079 & True & True & True \\
+\hline
+6 &	1004 & 2019-08-31 04:01:00.099 & True & True & True \\
+\hline
+7 &	1004 & 2019-08-31 04:01:10.118 & True & True & True \\
+\hline
+8 &	1004 & 2019-08-31 04:01:20.136 & False & True & True \\
+\hline
+9 &	1004& 2019-08-31 04:01:30.145 & False & True & True \\ [1ex] 
+\hline
+\end{tabular}
+\end{center}

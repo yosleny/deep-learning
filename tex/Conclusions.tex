@@ -1,18 +1,8 @@
-\addcontentsline{toc}{chapter}{Conclusioni}
-\chapter*{Conclusioni}
+\addcontentsline{toc}{chapter}{Conclusions}
+\chapter*{Conclusions}
 
-Abbiamo considerato la dinamica di un atomo a due livelli inserito in una cavit\`a, la cui densitta spettrale viene descrita da una Lorentziana. Senza l'uso della teoria delle perturbazioni, deriviamo due equazioni differenziali accoppiate che descrivono il sistema. Sono stati analizzati i limiti quando la ampiezza a met\`a altezza della Lorentziana \`e molto stretta e quando \`e molto larga, i risultati sono stati confrontati con quelli del modello  di Jaynes-Cummings e della teoria di Weisskopf-Wigner del'missione spontanea.
+Our fist task was next value prediction, for that purpose we use an special type of recurrent neural network name Long Short Term Memory. We were able to predit the next value with a mean square error of 54.55, 59.22, 61.74 for x, y and z respectively using a window size of 5 minutes and a window shift of 1 minute. 
 
-Abbiamo discusso come si pu\`o costruire una misura per la non~markovianit\`a dei processi quantistici nei sistemi aperti in termini di informazione che fluisce dall'ambiente al sistema durante la sua l'evoluzione temporale. 
+We repeat the calculation maintaining the window shift constant and varying the window size from 1 minute to 15 minutes one minute step, then maintaining the window size constant and varying the window shift half a minute step. Mean Absolute Error does not show any significant improvement.
 
-Abbiamo applicato queste definizione allo studio della non~markovianit\`a di un sistema a due livelli che interagisce con un ambiente strutturato a temperatura zero. 
-
-Nel limite dell'accoppiamento debole cio\`e $g \ll \G$, alla risonanza e per valori moderatamente piccoli di $\delta$, otteniamo $\mathcal{N} = 0$. Mentre per $\delta$ maggiori di $\G$ troviamo che $\mathcal{N} > 0$ per frequenze di detuning al di sopra del valore di soglia. In particolare per $g = 0.1 \G$ la frequenza di soglia \`e data da $\delta^{\ast} = 3.635 \G$ e la coppia di stati iniziali ottimali \`e data da $\md1 (0) = \ket b \bra b$ e $\md2 (0) = \ket e \bra e$
-
-Per una cavit\`a moderatamente buona cio\`e  $g \sim \G$ possiamo distinguere due casi $g < \G$ e $g > \G$. 
-
-Per $g < \G$ la misura di non~markovianit\`a \`e positiva, $ \mathcal{N} > 0 $, per valori di $\delta$ al di sotto e al di sopra di due valori di soglia, mentre una regione di comportamento puramente markoviano si sviluppa per valori intermedi. In particolare per $R = 0.8~\G$ troviamo che $\delta_{1}^{\ast} = 0.283~\G$ e $\delta_{2}^{\ast} = 2.956~\G$.
-
-Per $g > \G$ si osserva che $\mathcal{N}$ \`e sempre maggiore di zero dopo che le due frequenze di soglia collassano in una. In particolare per $g = 1.2~\G$ troviamo che il valore della frequenza di soglia \`e $\delta^{\ast} = 1.438$.
-
-In entrambi i casi la frequenza di soglia segnala un cambiamento della coppia ottimale. La coppia ottimale \`e data da qualsiasi coppia di stati antipodali sull'equatore della sfera di Bloch per frequenze di detuning al di sotto del valore di soglia inferiore $\delta_{1}^{\ast}$. Mentre per valori al di sopra di $\delta_{2}^{\ast}$ \`e data dalla coppia di stati antipodali nord-sud della sfera di Bloch.
+Our second task was to detect anomalies, for that purpose we use an autoencoder to learn a representation of the train data assuming it was normal, then we decide whether a data point was normal or anomalous based on how well our model performs over the test data. We produce a file (.csv) in which for each patients we insert the dates in which an anomalous behaviour occurs.
