@@ -189,7 +189,7 @@ Here is our model.
 \begin{lstlisting}[language=Python]
 lstm = tf.keras.models.Sequential([
 	tf.keras.layers.LSTM(16, 
-		     input_shape=(sequence_length, numumber_of_features), 
+		     input_shape=(sequence_length, number_of_features), 
 		     return_sequences=True),
 	tf.keras.layers.LSTM(8),
 	tf.keras.layers.Dense(1, activation='tanh')
@@ -217,9 +217,9 @@ MAE & 54.55 & 59.22 & 61.74 \\
 \end{tabular}
 \end{center}
 
-As mentioned before we use a window of 5 minutues and a shift of 1 minute, but this was an arbitrary choice. In order to evaluate the impact of window size and window shift we rerun our model varying this two parameters.
+As mentioned before we use a window of 5 minutes and a shift of 1 minute, but this was an arbitrary choice. In order to evaluate the impact of window size and window shift we rerun our model varying this two parameters.
 
-Mean Square Error (MAE) with a fixed window shift of 1 minute and variable window size. 
+Mean Square Error (MAE) with a fixed window shift of 1 minute and variable window size for feature x:
 
 \begin{center}
 \begin{tabular}{| c | c |} 
@@ -260,7 +260,7 @@ Window (min) & MAE  \\ [0.5ex]
 \end{tabular}
 \end{center}
 
-Mean Square Error (MAE) with a fixed window size of 5 minutes and variable window shift. 
+Mean Square Error (MAE) with a fixed window size of 5 minutes and variable window shift for feature x: 
 
 \begin{center}
 \begin{tabular}{| c | c |} 
