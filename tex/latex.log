@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.12.11)  20 JUN 2022 14:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.12.11)  20 JUN 2022 15:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -846,9 +846,17 @@ your preamble.
  on input line 63.
 
 \c@lstlisting=\count317
-(./latex.toc
+
+Underfull \hbox (badness 10000) in paragraph at lines 69--70
+
+ []
+
+[1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./latex.toc
 LaTeX Font Info:    Trying to load font information for U+msa on input line 4.
- (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Trying to load font information for U+msb on input line 4.
@@ -868,12 +876,10 @@ File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 
 (./Introduction.tex [1
 
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}])
-(./task_1.tex [2
+]) (./task_1.tex [2
 
 ]
-<img/task_1/data(hour).png, id=15, 1192.455pt x 922.44624pt>
+<img/task_1/data(hour).png, id=20, 1192.455pt x 922.44624pt>
 File: img/task_1/data(hour).png Graphic file (type png)
 <use img/task_1/data(hour).png>
 Package pdftex.def Info: img/task_1/data(hour).png  used on input line 46.
@@ -881,27 +887,27 @@ Package pdftex.def Info: img/task_1/data(hour).png  used on input line 46.
  [3
 
 ]
-<img/task_1/histograms.png, id=20, 830.10126pt x 703.62875pt>
+<img/task_1/histograms.png, id=25, 830.10126pt x 703.62875pt>
 File: img/task_1/histograms.png Graphic file (type png)
 <use img/task_1/histograms.png>
 Package pdftex.def Info: img/task_1/histograms.png  used on input line 71.
 (pdftex.def)             Requested size: 332.03462pt x 281.4465pt.
- [4 <./img/task_1/data(hour).png>]
-(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+ [4 <./img/task_1/data(hour).png>] (/usr/share/texlive/texmf-dist/tex/latex/lis
+tings/lstlang1.sty
 File: lstlang1.sty 2019/09/10 1.8c listings language file
 ) [5 <./img/task_1/histograms.png>] [6]
-<img/task_1/fig1.png, id=34, 504.88625pt x 428.60126pt>
+<img/task_1/fig1.png, id=40, 504.88625pt x 428.60126pt>
 File: img/task_1/fig1.png Graphic file (type png)
 <use img/task_1/fig1.png>
 Package pdftex.def Info: img/task_1/fig1.png  used on input line 167.
 (pdftex.def)             Requested size: 176.71283pt x 150.01268pt.
-<img/task_1/fig2.png, id=35, 483.8075pt x 411.5375pt>
+<img/task_1/fig2.png, id=41, 483.8075pt x 411.5375pt>
 File: img/task_1/fig2.png Graphic file (type png)
 <use img/task_1/fig2.png>
 Package pdftex.def Info: img/task_1/fig2.png  used on input line 182.
 (pdftex.def)             Requested size: 169.33516pt x 144.04028pt.
  [7 <./img/task_1/fig1.png>] [8 <./img/task_1/fig2.png>]) (./task_2.tex [9]
-<img/task_2/data(5min).png, id=48, 1192.455pt x 1122.1925pt>
+<img/task_2/data(5min).png, id=53, 1192.455pt x 1122.1925pt>
 File: img/task_2/data(5min).png Graphic file (type png)
 <use img/task_2/data(5min).png>
 Package pdftex.def Info: img/task_2/data(5min).png  used on input line 46.
@@ -909,7 +915,7 @@ Package pdftex.def Info: img/task_2/data(5min).png  used on input line 46.
  [10
 
 ]
-<img/task_2/histograms.png, id=52, 836.12375pt x 703.62875pt>
+<img/task_2/histograms.png, id=57, 836.12375pt x 703.62875pt>
 File: img/task_2/histograms.png Graphic file (type png)
 <use img/task_2/histograms.png>
 Package pdftex.def Info: img/task_2/histograms.png  used on input line 72.
@@ -925,25 +931,25 @@ Overfull \hbox (24.76077pt too wide) in paragraph at lines 192--194
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-<img/task_2/reconstructions_train.png, id=71, 1192.455pt x 1122.1925pt>
+<img/task_2/reconstructions_train.png, id=76, 1192.455pt x 1122.1925pt>
 File: img/task_2/reconstructions_train.png Graphic file (type png)
 <use img/task_2/reconstructions_train.png>
 Package pdftex.def Info: img/task_2/reconstructions_train.png  used on input li
 ne 211.
 (pdftex.def)             Requested size: 417.36551pt x 392.77327pt.
 [15] [16 <./img/task_2/reconstructions_train.png>]
-<img/task_2/train_loss.png, id=79, 505.89pt x 429.605pt>
+<img/task_2/train_loss.png, id=84, 505.89pt x 429.605pt>
 File: img/task_2/train_loss.png Graphic file (type png)
 <use img/task_2/train_loss.png>
 Package pdftex.def Info: img/task_2/train_loss.png  used on input line 232.
 (pdftex.def)             Requested size: 202.3524pt x 171.83894pt.
-<img/task_2/train_test_loss.png, id=80, 505.89pt x 429.605pt>
+<img/task_2/train_test_loss.png, id=85, 505.89pt x 429.605pt>
 File: img/task_2/train_test_loss.png Graphic file (type png)
 <use img/task_2/train_test_loss.png>
 Package pdftex.def Info: img/task_2/train_test_loss.png  used on input line 241
 .
 (pdftex.def)             Requested size: 202.3524pt x 171.83894pt.
-<img/task_2/reconstructions_test.png, id=81, 1188.44pt x 1122.1925pt>
+<img/task_2/reconstructions_test.png, id=86, 1188.44pt x 1122.1925pt>
 File: img/task_2/reconstructions_test.png Graphic file (type png)
 <use img/task_2/reconstructions_test.png>
 Package pdftex.def Info: img/task_2/reconstructions_test.png  used on input lin
@@ -958,11 +964,11 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 27003 strings out of 481239
- 648160 string characters out of 5920376
+ 27005 strings out of 481239
+ 648185 string characters out of 5920376
  1155883 words of memory out of 5000000
- 41816 multiletter control sequences out of 15000+600000
- 537610 words of font info for 45 fonts, out of 8000000 for 9000
+ 41818 multiletter control sequences out of 15000+600000
+ 537909 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  63i,12n,98p,898b,1751s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texli
@@ -971,12 +977,14 @@ mf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/font
 s/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on latex.pdf (20 pages, 1329845 bytes).
+/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pf
+b></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb>
+Output written on latex.pdf (21 pages, 1355933 bytes).
 PDF statistics:
- 126 PDF objects out of 1000 (max. 8388607)
- 75 compressed objects within 1 object stream
+ 137 PDF objects out of 1000 (max. 8388607)
+ 83 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  63 words of extra memory for PDF output out of 10000 (max. 10000000)
 
